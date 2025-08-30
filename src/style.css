@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 
-
-
-html,
-body{
-  height: 100%;
-  background-color: rgb(22, 21, 21)
+body {
+  background-color: #020617;
+  background-image: radial-gradient(
+    circle at center,
+    oklch(25% 0.1 300 / 0.25),
+    transparent 60%
+  );
+  min-height: 100vh;
 }
-
