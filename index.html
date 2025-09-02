@@ -7,26 +7,26 @@
   <script type="module" src="/src/main.js"></script>
 </head>
   <body>
-    <div id="main-container" class="min-h-screen">
+    <div id="main-container" class="min-h-screen flex flex-col">
         <header class="w-full">
-          <div id="nav-bar">
+          <div id="nav-bar" class="min-h-28 flex justify-between items-center p-4">
             <div id="logo">
-              <div id="logo-img"></div>
-              <div id="logo-text"></div>
+              <!-- <div id="logo-img"></div> -->
+              <div id="logo-text" class="text-slate-300 text-4xl">Slate</div>
+            </div>
+            <div id="hamburger-menu">
+              <div></div>
             </div>
           </div>
         </header>
-        <main class="flex flex-col flex-grow justify-center items-center min-h-screen">
+        <div id="day-btns" class="flex items-start">
+              <div class="text-white">Today</div>
+              <div class="text-white">Tomorrow</div>
+        <main class="flex flex-col flex-grow justify-center items-center min-h-full">
           <div id="content-container" class="text-center justify-center items-center p-8 flex flex-col gap-8">
-            <div id="now" class="text-center flex flex-col justify-center items-center">
-              <div class="text-green-400 font-bold text-sm">Now</div>
-              <div class="text-5xl text-white font-bold mt-1">DSA</div>
-              <div class="text-slate-500 mt-4">Room: L/L-4 &bull; Ends at 9:35 AM</div>
             </div>
-            <div id="upcoming" class="text-center flex flex-col justify-center items-center">
-              <div class="text-amber-300 text-sm">Upcoming</div>
-              <div class="text-3xl text-slate-300 font-bold mt-1">OOP</div>
-              <div class="text-slate-400 mt-2">Starts in 10:49m</div>
+           <ul id="main-classes">
+           </ul>
             </div>
           </div>
         </main>

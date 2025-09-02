@@ -1,12 +1,17 @@
-@import "tailwindcss";
-
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&family=Itim&family=Noto+Color+Emoji&family=Permanent+Marker&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&family=Itim&family=Noto+Color+Emoji&family=Permanent+Marker&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+@import 'tailwindcss';
 
 body {
   background-color: #020617;
   background-image: radial-gradient(
     circle at center,
-    oklch(25% 0.1 300 / 0.25),
+    oklch(25% 0.1 300 / 0.55),
     transparent 60%
   );
   min-height: 100vh;
+}
+
+#logo-text{
+    font-family: "Satisfy", cursive;
 }
