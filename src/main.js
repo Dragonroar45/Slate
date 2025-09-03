@@ -2,6 +2,13 @@ import './style.css';
 
 let mainClasses = document.getElementById("main-classes");
 
+const Appstate = {
+    'day': null,
+    'startTime': null,
+    'endTime': null,
+    'status':null
+}
+
 const URL = "https://harshslatedata.blob.core.windows.net/public/timetable.json";
 
 async function initiliazeApp() {
@@ -14,7 +21,7 @@ async function fetchTimeTable() {
     try {
         const timeTablePromise = await fetch(URL);
         if (!timeTablePromise.ok){
-            throw new Error(`HTTP ERROR: ${timeTablePromise.status}`)
+            throw new Error(`HTTP ERROR: ${timeTablePromise.status}`);
         }
         const timeTableTemp = await timeTablePromise.json();
         return timeTableTemp;
@@ -31,4 +38,11 @@ function getTodaySchedule(data){
     return data[day] || [];
 }
 
-initiliazeApp();
+function parseTime(time){
+    const timeArr = time.split(':');
+    console.log(timeArr);
+    const timeObject = new Date();
+    timeObject.setHours(parseInt(timeArr[0]), parseInt(timeArr[1]));
+    return timeObject;
+}
+
