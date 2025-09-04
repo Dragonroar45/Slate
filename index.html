@@ -6,10 +6,10 @@
   <title>Document</title>
   <script type="module" src="/src/main.js"></script>
 </head>
-  <body>
+  <body class="overflow-hidden">
     <div id="main-container" class="min-h-screen flex flex-col">
         <header class="w-full">
-          <div id="nav-bar" class="min-h-28 flex justify-between items-center p-4">
+          <div id="nav-bar" class="min-h-28 flex justify-between items-center p-4 sticky top-0 z-50 shrink-0">
             <div id="logo">
               <!-- <div id="logo-img"></div> -->
               <div id="logo-text" class="text-slate-300 text-4xl">Slate</div>
@@ -22,13 +22,10 @@
         <div id="day-btns" class="flex items-start">
               <div class="text-white">Today</div>
               <div class="text-white">Tomorrow</div>
-        <main class="flex flex-col flex-grow justify-center items-center min-h-full">
-          <div id="content-container" class="text-center justify-center items-center p-8 flex flex-col gap-8">
-            </div>
-           <ul id="main-classes">
-           </ul>
-            </div>
-          </div>
+        </div>
+        <main class="overflow-y-auto flex-grow">
+          <ul id="main-classes">
+          </ul>
         </main>
       </div>
     </div>

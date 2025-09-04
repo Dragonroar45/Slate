@@ -11,10 +11,39 @@ const Appstate = {
 
 const URL = "https://harshslatedata.blob.core.windows.net/public/timetable.json";
 
+function createTimelineItem(classInfo){
+    let listItem = document.createElement('li');
+    listItem.classList = 'text-center justify-center items-center p-8 flex flex-col gap-8';
+
+    let subjectName = document.createElement('p');
+    subjectName.classList = 'text-5xl text-white font-bold';
+    subjectName.textContent = classInfo.subject;
+
+    let classTime = document.createElement('p');
+    classTime.classList = 'text-slate-500 mt-4';
+    classTime.textContent = `Time: ${classInfo.startTime} - ${classInfo.endTime}`;
+
+    listItem.appendChild(subjectName);
+    listItem.appendChild(classTime);
+
+    return listItem;
+
+}
+
 async function initiliazeApp() {
-    const timetableData = await fetchTimeTable();
-    const todaySchedule = fetchSchedule(timetableData);
-    console.log(todaySchedule);
+    try {
+        const timetableData = await fetchTimeTable();
+        const todaySchedule = getTodaySchedule(timetableData);
+
+        mainClasses.textContent = "Loading....";
+
+        todaySchedule.forEach(classItem => {
+            let item = createTimelineItem(classItem);
+            mainClasses.appendChild(item);
+        });
+    } catch (error) {
+        mainClasses.textContent = `ERROR: ${error}`;
+    }
 }
 
 async function fetchTimeTable() {
@@ -45,4 +74,6 @@ function parseTime(time){
     timeObject.setHours(parseInt(timeArr[0]), parseInt(timeArr[1]));
     return timeObject;
 }
+
+initiliazeApp();
 
