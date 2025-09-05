@@ -92,13 +92,13 @@ function createTimelineItem(classInfo, status){
         classTime.textContent = `Starts at: ${classInfo.startTime}`;
     }else if (status === 'next'){
         let textNode = document.createTextNode('Starts in: ');
-        textNode.classList = "text-amber-400"
         let timerNext = document.createElement("span");
         timerNext.id = "countdown-timer";
         timerNext.textContent = "...";
 
         classTime.appendChild(textNode);
         classTime.appendChild(timerNext);
+        classTime.classList = "text-amber-400 text-bold"
     }else{
         classTime.classList = 'text-slate-400 mt-1 text-bold';
         classTime.textContent = `Ended at: ${classInfo.endTime}`;
