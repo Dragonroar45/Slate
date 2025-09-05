@@ -68,32 +68,45 @@ function createTimelineItem(classInfo, status){
         room.textContent = `Room: ${classInfo.room}`;
         listItem.id = `current-class`;
     } else if (status === 'upcoming'){
-
         subjectName.classList = 'text-3xl text-slate-300 font-bold mt-1';
         room.classList = "text-2xl text-slate-300 font-bold mt-4"
         room.textContent = `Room: ${classInfo.room}`
     } else if (status === 'next'){
+        eyeBrow.classList = "text-amber-300 text-sm"
+        eyeBrow.textContent = "Next";
         subjectName.classList = "text-3xl text-slate-300 font-bold mt-1";
         room.classList = "text-3xl text-slate-300 font-bold mt-4";
         room.textContent = `Room: ${classInfo.room}`;
     }else {
         subjectName.classList = 'text-xl text-slate-300 font-bold mt-1';
-        room.classList = "text-xl text-slate-300 font-bold mt-1";
+        room.classList = "text-xl text-slate-400 font-bold mt-1";
         room.textContent = `Room: ${classInfo.room}`;
     }
     subjectName.textContent = classInfo.subject;
     let classTime = document.createElement('p');
     if (status === 'now') {
-        classTime.classList = 'text-slate-500 mt-4';
+        classTime.classList = 'text-slate-500 mt-4 text-5xl';
+        classTime.textContent = `Started at: ${classInfo.startTime}`;
     } else if (status === 'upcoming'){
-        classTime.classList = 'text-slate-400 mt-2';
-    } else{
-        classTime.classList = 'text-slate-400 mt-';
+        classTime.classList = 'text-slate-400 mt-2 text-2xl';
+        classTime.textContent = `Starts at: ${classInfo.startTime}`;
+    }else if (status === 'next'){
+        let textNode = document.createTextNode('Starts in: ');
+
+        let timerNext = document.createElement("span");
+        timerNext.id = "countdown-timer";
+        timerNext.textContent = "...";
+
+        classTime.appendChild(textNode);
+        classTime.appendChild(timerNext);
+    }else{
+        classTime.classList = 'text-slate-400 mt-1 text-bold';
+        classTime.textContent = `Ended at: ${classInfo.endTime}`;
     }
 
-    classTime.textContent = `Time: ${classInfo.startTime} - ${classInfo.endTime}`;
     listItem.appendChild(eyeBrow);
     listItem.appendChild(subjectName);
+    listItem.appendChild(room);
     listItem.appendChild(classTime);
 
     return listItem;
@@ -122,6 +135,30 @@ function renderUI(){
     }
 }
 
+function updateCountdown(){
+    let nextCount = document.getElementById("countdown-timer");
+    if (!nextCount){
+        return;
+    }
+    let nextClass = Appstate.nextClass;
+    if (!nextClass) {
+        nextCount.textContent = "--:--";
+      return;
+    }
+    const timeNow = new Date();
+    const nextClassTime = parseTime(nextClass.startTime);
+    let timediffMs = nextClassTime - timeNow;
+
+    const totalSeconds = Math.floor(timediffMs/1000);
+    const minutes = Math.floor(totalSeconds/60);
+
+    const remainSecond = totalSeconds % 60;
+
+    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    nextCount.textContent = formattedTime;
+}
+
 async function initiliazeApp() {
     try {
         mainClasses.textContent = "Loading....";
@@ -136,6 +173,7 @@ async function initiliazeApp() {
 
         setInterval(repeat, runTIme);
         repeat();
+        setInterval(updateCountdown, 1000);
     } catch (error) {
         mainClasses.textContent = `ERROR: ${error}`;
         console.error(error);
