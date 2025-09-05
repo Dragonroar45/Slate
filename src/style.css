@@ -17,15 +17,14 @@ body {
 }
 
 #endofdayid {
-  padding: 2rem; /* p-8 */
-  font-size: 1.875rem; /* text-3xl */
+  padding: 2rem;
+  font-size: 1.875rem; 
   line-height: 2.25rem;
-  font-weight: 700; /* font-bold */
-  color: rgb(226, 232, 240); /* text-slate-200 */
+  font-weight: 700; 
+  color: rgb(226, 232, 240); 
   text-align: center;
-  /* Add this to help with vertical centering */
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 50vh; /* Ensures it has space to center in */
+  min-height: 50vh; 
 }

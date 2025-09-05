@@ -63,13 +63,13 @@ function createTimelineItem(classInfo, status){
     if (status === 'now') {
         eyeBrow.classList = "text-green-400 font-bold text-sm";
         eyeBrow.textContent = 'Now';
-        subjectName.classList = 'text-5xl text-white font-bold';
-        room.classList = "text-5xl text-white font-bold mt-4"
+        subjectName.classList = 'text-4xl text-white font-bold';
+        room.classList = "text-3xl text-white font-bold mt-2"
         room.textContent = `Room: ${classInfo.room}`;
         listItem.id = `current-class`;
     } else if (status === 'upcoming'){
-        subjectName.classList = 'text-3xl text-slate-300 font-bold mt-1';
-        room.classList = "text-2xl text-slate-300 font-bold mt-4"
+        subjectName.classList = 'text-2xl text-slate-400 font-bold';
+        room.classList = "text-xl text-slate-400 font-bold mt-2"
         room.textContent = `Room: ${classInfo.room}`
     } else if (status === 'next'){
         eyeBrow.classList = "text-amber-300 text-sm"
@@ -78,17 +78,17 @@ function createTimelineItem(classInfo, status){
         room.classList = "text-3xl text-slate-300 font-bold mt-4";
         room.textContent = `Room: ${classInfo.room}`;
     }else {
-        subjectName.classList = 'text-xl text-slate-300 font-bold mt-1';
-        room.classList = "text-xl text-slate-400 font-bold mt-1";
+        subjectName.classList = 'text-xl text-slate-500 font-bold line-through';
+        room.classList = "text-xl text-slate-600 font-bold mt-1 line-through";
         room.textContent = `Room: ${classInfo.room}`;
     }
     subjectName.textContent = classInfo.subject;
     let classTime = document.createElement('p');
     if (status === 'now') {
-        classTime.classList = 'text-slate-500 mt-4 text-5xl';
+        classTime.classList = 'text-slate-400 mt-2 text-2xl';
         classTime.textContent = `Started at: ${classInfo.startTime}`;
     } else if (status === 'upcoming'){
-        classTime.classList = 'text-slate-400 mt-2 text-2xl';
+        classTime.classList = 'text-slate-500 mt-2 text-xl';
         classTime.textContent = `Starts at: ${classInfo.startTime}`;
     }else if (status === 'next'){
         let textNode = document.createTextNode('Starts in: ');
@@ -98,7 +98,7 @@ function createTimelineItem(classInfo, status){
 
         classTime.appendChild(textNode);
         classTime.appendChild(timerNext);
-        classTime.classList = "text-amber-400 text-bold"
+        classTime.classList = "text-amber-300 font-semibold text-xl mt-2";
     }else{
         classTime.classList = 'text-slate-400 mt-1 text-bold';
         classTime.textContent = `Ended at: ${classInfo.endTime}`;
