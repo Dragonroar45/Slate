@@ -47,7 +47,7 @@ function updateState(){
     })
     if (Appstate.pastClasses.length === todaySchedule.length) {
         if (!Appstate.currentClass) {
-        Appstate.isDoneForTheDay = true;
+        Appstate.isDoneForDay = true;
         }
     }
 }
@@ -154,7 +154,7 @@ function updateCountdown(){
 
     const remainSecond = totalSeconds % 60;
 
-    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(remainSecond).padStart(2, '0')}`;
 
     nextCount.textContent = formattedTime;
 }
@@ -213,7 +213,7 @@ function getStatus(classInfo, currentTIme){
     const endClassTime = parseTime(classInfo.endTime);
 
     if (currentTIme < startClassTime){
-        return "Upcoming";
+        return "upcoming";
     } else if (currentTIme >= startClassTime && currentTIme < endClassTime){
         return "now";
     } else{
