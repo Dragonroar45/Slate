@@ -15,3 +15,17 @@ body {
 #logo-text{
     font-family: "Satisfy", cursive;
 }
+
+#endofdayid {
+  padding: 2rem; /* p-8 */
+  font-size: 1.875rem; /* text-3xl */
+  line-height: 2.25rem;
+  font-weight: 700; /* font-bold */
+  color: rgb(226, 232, 240); /* text-slate-200 */
+  text-align: center;
+  /* Add this to help with vertical centering */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh; /* Ensures it has space to center in */
+}

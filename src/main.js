@@ -92,7 +92,7 @@ function createTimelineItem(classInfo, status){
         classTime.textContent = `Starts at: ${classInfo.startTime}`;
     }else if (status === 'next'){
         let textNode = document.createTextNode('Starts in: ');
-
+        textNode.classList = "text-amber-400"
         let timerNext = document.createElement("span");
         timerNext.id = "countdown-timer";
         timerNext.textContent = "...";
@@ -202,9 +202,9 @@ function getTodaySchedule(data){
 }
 
 function parseTime(time){
-    const timeArr = time.split(':');
+    const [hours, minutes] = time.split(':');
     const timeObject = new Date();
-    timeObject.setHours(parseInt(timeArr[0]), parseInt(timeArr[1]));
+    timeObject.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0)
     return timeObject;
 };
 
