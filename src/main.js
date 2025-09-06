@@ -12,12 +12,26 @@ const Appstate = {
     currentClass: null,
     nextClass: null,
     laterClasses: [],
-    isDoneForDay: false
+    isDoneForDay: false,
+    currentlyViewing: 'today',
+    targetDateForClock: new Date()
 }
 
 function updateState(){
 
     const currentTIme = new Date();
+    Appstate.targetDateForClock = new Date();
+
+    if (Appstate.currentlyViewing === 'tomorrow'){
+        const day = Appstate.targetDateForClock.getDay();
+        if (day === 5){
+            Appstate.targetDateForClock.setDate(Appstate.targetDateForClock.getDate()+3);
+        } else if (day === 6){
+            Appstate.targetDateForClock.setDate(Appstate.targetDateForClock.getDate()+2);
+        } else{
+            Appstate.targetDateForClock.setDate(Appstate.targetDateForClock.getDate()+1);
+        }
+    }
     Appstate.pastClasses = [];
     Appstate.currentClass = null;
     Appstate.nextClass = null;
@@ -115,6 +129,15 @@ function createTimelineItem(classInfo, status){
 
 function renderUI(){
     mainClasses.textContent = " ";
+    let todayBtn = document.getElementById("today-btn");
+    let tomorrowBtn = document.getElementById("tomorrow-btn");
+    if (Appstate.currentlyViewing === 'today'){
+        todayBtn.classList.add("bg-purple-700");
+        tomorrowBtn.classList.remove("bg-purple-700");
+    } else{
+        todayBtn.classList.remove("bg-purple-700");
+        tomorrowBtn.classList.add("bg-purple-700");
+    }
     Appstate.pastClasses.forEach(c => mainClasses.appendChild(createTimelineItem(c, 'past')));
     if (Appstate.currentClass){
         mainClasses.appendChild(createTimelineItem(Appstate.currentClass, 'now'));
@@ -136,7 +159,15 @@ function renderUI(){
 }
 
 function updateCountdown(){
+
     let nextCount = document.getElementById("countdown-timer");
+
+    if (Appstate.currentlyViewing !== 'today' || !nextCount) {
+        if (nextCount){
+            nextCount.textContent = "--:--" 
+        }
+        return;
+    }
     if (!nextCount){
         return;
     }
@@ -159,12 +190,36 @@ function updateCountdown(){
     nextCount.textContent = formattedTime;
 }
 
+function changeviewToday(){
+    if (Appstate.currentlyViewing === 'today'){
+        return;
+    } else{
+        Appstate.currentlyViewing = 'today';
+        updateState();
+        renderUI();
+    }
+}
+
+function changeviewTomorrow(){
+    if (Appstate.currentlyViewing === 'tomorrow'){
+        return;
+    } else{
+        Appstate.currentlyViewing = 'tomorrow';
+        updateState();
+        renderUI();
+    }
+}
+
 async function initiliazeApp() {
     try {
         mainClasses.textContent = "Loading....";
         const timetableData = await fetchTimeTable();
         Appstate.fullTable = timetableData;
         console.log(Appstate.fullTable);
+        let todayBtn = document.getElementById("today-btn");
+        let tomorrowBtn = document.getElementById("tomorrow-btn");
+        todayBtn.addEventListener('click', changeviewToday);
+        tomorrowBtn.addEventListener('click', changeviewTomorrow);
 
         function repeat(){
             updateState();
@@ -195,15 +250,28 @@ async function fetchTimeTable() {
 
 function getTodaySchedule(data){
     const weekdays = ['sunday', 'monday', 'tuesday', 'wednesday','thursday','friday','saturday'];
-    const date = new Date();
-    const day = weekdays[date.getDay()];
+    const day = new Date().getDay();
 
-    return data[day] || [];
+    let key;
+    if (Appstate.currentlyViewing === 'today') {
+        key = weekdays[day]
+    } else{
+        if (day === 6 || day === 0){
+            key = 'monday';
+        } else if (day === 5){
+            key = 'monday';
+        }
+        else{
+            key = weekdays[day+1]
+        }
+    }
+
+    return data[key] || [];
 }
 
 function parseTime(time){
     const [hours, minutes] = time.split(':');
-    const timeObject = new Date();
+    const timeObject = new Date(Appstate.targetDateForClock);
     timeObject.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0)
     return timeObject;
 };
