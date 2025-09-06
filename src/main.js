@@ -210,9 +210,12 @@ function changeviewTomorrow(){
     }
 }
 
+let deferredPrompt;
+
 async function initiliazeApp() {
     try {
         mainClasses.textContent = "Loading....";
+
         const timetableData = await fetchTimeTable();
         Appstate.fullTable = timetableData;
         console.log(Appstate.fullTable);
@@ -220,6 +223,32 @@ async function initiliazeApp() {
         let tomorrowBtn = document.getElementById("tomorrow-btn");
         todayBtn.addEventListener('click', changeviewToday);
         tomorrowBtn.addEventListener('click', changeviewTomorrow);
+
+        const installButton = document.getElementById('install-button');
+
+        installButton.classList.add('hidden');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+  
+            installButton.classList.remove('hidden');
+        });
+
+        installButton.addEventListener('click', async () => {
+  
+            if (deferredPrompt) {
+        
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                
+                deferredPrompt = null;
+                
+                installButton.classList.add('hidden');
+            }
+        });
+
 
         function repeat(){
             updateState();
