@@ -301,7 +301,7 @@ function scrolltoRelevantItem(){
     if (elementToScroll){
         elementToScroll.scrollIntoView({
             behavior: 'smooth',
-            block: 'nearest'
+            block: 'start'
         })
     }
 }
