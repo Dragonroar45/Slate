@@ -11,8 +11,8 @@ export default defineConfig({
         name: 'Slate',
         short_name: 'Slate',
         description: 'A live, fast timetable for your campus schedule.',
-        theme_color: '#020617', 
-        background_color: '#020617', 
+        theme_color: '#000000', 
+        background_color: '#000000', 
         icons: [
           {
             src: 'pwa-192x192.png', 
