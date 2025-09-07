@@ -148,7 +148,15 @@ function renderUI(){
 
     Appstate.laterClasses.forEach(c => mainClasses.appendChild(createTimelineItem(c, 'upcoming')));
 
-    if (Appstate.isDoneForDay){
+    if (new Date().getDay() === 6 || new Date().getDay() === 0){
+        const weekendMessage = document.createElement('p');
+        weekendMessage.textContent = "🎉 No Classes today. Enjoy our day off!";
+        weekendMessage.classList = "text-slate-300 font-bold mt-2 text-2xl text-center m-auto";
+        mainClasses.appendChild(weekendMessage);
+        
+    }
+
+    if (Appstate.isDoneForDay && !(new Date().getDay() === 6 || new Date().getDay() === 0)){
         const message = document.createElement('p');
         message.textContent = "✅ All classes are done for today!";
         message.id = "endofdayid";
@@ -185,13 +193,19 @@ function updateCountdown(){
         return;
     }
 
+    let formattedTime;
+
     const totalSeconds = Math.floor(timediffMs/1000);
-    const minutes = Math.floor(totalSeconds/60);
+    const totalMinutes = Math.floor(totalSeconds/60);
 
-    const remainSecond = totalSeconds % 60;
-
-    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(remainSecond).padStart(2, '0')}`;
-
+    if (totalMinutes >= 60){
+        let hours = Math.floor(totalMinutes/60);
+        let minutes = Math.floor(totalMinutes % 60);
+        formattedTime = `${hours}h ${String(minutes).padStart(2, '0')}m`;
+    } else{
+        const remainSecond = totalSeconds % 60;
+        formattedTime = `${String(totalMinutes).padStart(2, '0')}:${String(remainSecond).padStart(2, '0')}`;
+    }
     nextCount.textContent = formattedTime;
 }
 
