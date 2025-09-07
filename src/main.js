@@ -180,6 +180,11 @@ function updateCountdown(){
     const nextClassTime = parseTime(nextClass.startTime);
     let timediffMs = nextClassTime - timeNow;
 
+    if (timediffMs < 0){
+        repeat();
+        return;
+    }
+
     const totalSeconds = Math.floor(timediffMs/1000);
     const minutes = Math.floor(totalSeconds/60);
 
@@ -250,11 +255,6 @@ async function initiliazeApp() {
         });
 
 
-        function repeat(){
-            updateState();
-            renderUI();
-        }
-
         setInterval(repeat, runTIme);
         repeat();
         setInterval(updateCountdown, 1000);
@@ -264,6 +264,11 @@ async function initiliazeApp() {
     }
 }
 
+
+function repeat(){
+    updateState();
+    renderUI();
+}
 async function fetchTimeTable() {
     try {
         const timeTablePromise = await fetch(URL);
