@@ -151,7 +151,7 @@ function renderUI(){
     if (new Date().getDay() === 6 || new Date().getDay() === 0){
         const weekendMessage = document.createElement('p');
         weekendMessage.textContent = "🎉 No Classes today. Enjoy your day off!";
-        weekendMessage.classList = "text-slate-300 font-bold mt-2 text-2xl text-center m-auto";
+        weekendMessage.classList = "text-slate-300 font-bold mt-2 text-2xl text-center m-auto pt-30 pl-4 pr-4";
         mainClasses.appendChild(weekendMessage);
         
     }
